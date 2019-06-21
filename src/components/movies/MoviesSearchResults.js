@@ -48,20 +48,23 @@ class MoviesSearchResults extends React.Component {
         <div className="container">
           <h1 className="title">Results</h1>
           <div>
-            <div id="results" className="columns is-multiline">
+            <div id="results" className="columns is-multiline is-mobile">
               {this.state.movies.map(movie => (
 
-                <div className="columns column is-half"  key={movie.id} data-id={movie.id} onClick={this.handleClick}>
-                  <div className="column is-one-quarter" data-id={movie.id}>
-                    <img src={!movie.poster_path ? 'https://www.placecage.com/200/300' : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} className="image" data-id={movie.id}/>
+                <div  className="columns column is-one-third-desktop is-half-tablet is-full-mobile"  key={movie.id} data-id={movie.id} onClick={this.handleClick}>
+                  <div id="result" className="columns is-mobile">
+                    <div className="column is-one-quarter" data-id={movie.id}>
+                      <img src={!movie.poster_path ? 'https://www.placecage.com/200/300' : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} className="image" data-id={movie.id}/>
+                    </div>
+                    <div className="column is-three-quarters" data-id={movie.id}>
+                      <h4 data-id={movie.id}>
+                        {movie.title}
+                      </h4>
+                      <p className="subtitle">{movie.release_date}</p>
+                      <p className="overview" data-id={movie.id}>{movie.overview}</p>
+                    </div>
                   </div>
-                  <div className="column is-three-quarters" data-id={movie.id}>
-                    <h4 data-id={movie.id}>
-                      {movie.title}
-                    </h4>
-                    <p className="subtitle">{movie.release_date}</p>
-                    <p className="overview" data-id={movie.id}>{movie.overview}</p>
-                  </div>
+
                 </div>
               ))}
             </div>
