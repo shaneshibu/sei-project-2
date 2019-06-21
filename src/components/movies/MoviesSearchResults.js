@@ -17,7 +17,7 @@ class MoviesSearchResults extends React.Component {
     this.props.history.push(`/movies/${id}`)
   }
 
-  searchMovies(  ) {
+  searchMovies() {
     const query = this.props.match.params.query
     //console.log(query)
     let overview = null
@@ -36,12 +36,27 @@ class MoviesSearchResults extends React.Component {
       .catch(err => console.log(err))
   }
 
+  searchTv() {
+    const query = this.props.match.params.query
+    let overview = null
+
+    axios.get(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${query}`)
+      .then(res => this.setState({ tvShows: res.data.results }))
+      .catch(err => console.log(err))
+  }
+
   componentDidMount() {
-    this.searchMovies()
+    console.log(this.props.location.pathname.split('/').includes('movies'))
+    if(this.props.location.pathname.split('/').includes('movies')) {
+      this.searchMovies()
+    } else if (this.props.location.pathname.split('/').includes('tv')){
+      this.searchTv()
+    }
+
   }
 
   render() {
-    console.log(this.state.movies)
+    //console.log(this.state)
     if (!this.state.movies) return null
     return(
       <section className="section">

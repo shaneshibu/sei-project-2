@@ -11,6 +11,11 @@ class Home extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.selectRadio = this.selectRadio.bind(this)
+  }
+
+  selectRadio(e) {
+    this.setState({ radio : e.target.id })
   }
 
   handleChange({ target: { value }}) {
@@ -21,8 +26,13 @@ class Home extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    console.log(e.target)
     const query = this.state.searchString.replace(/ /g, '+')
-    this.props.history.push(`search/${query}`)
+    if (this.state.radio==='TV') {
+      this.props.history.push(`search/tv/${query}`)
+    } else {
+      this.props.history.push(`search/movies/${query}`)
+    }
 
   }
 
@@ -37,7 +47,18 @@ class Home extends React.Component {
               className="input"
               onChange={this.handleChange}
               value={this.state.searchString}
+              placeholder="Pick a film"
             />
+            <div className="control">
+              <label className="radio">
+                <input type="radio" id="TV" onClick={this.selectRadio}/>
+                TV
+              </label>
+              <label className="radio">
+                <input type="radio" id="Movies" onClick={this.selectRadio}/>
+                Movies
+              </label>
+            </div>
           </form>
         </div>
       </section>

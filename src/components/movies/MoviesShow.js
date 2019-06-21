@@ -12,7 +12,7 @@ class MoviesShow extends React.Component {
   constructor() {
     super()
 
-    this.state = {  reviews: []  }
+    this.state = {  reviews: { results: [] }  }
 
     this.getMovie = this.getMovie.bind(this)
     this.getReviews = this.getReviews.bind(this)
@@ -22,9 +22,12 @@ class MoviesShow extends React.Component {
     this.moveReview = this.moveReview.bind(this)
     this.chooseMedia = this.chooseMedia.bind(this)
     this.getRecommendations = this.getRecommendations.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    this.setBackground = this.setBackground.bind(this)
   }
 
   componentDidMount() {
+    this.setState({ previousLocation: this.props.history.location })
     const movieId = this.props.match.params.id
     this.getMovie(movieId)
     this.getReviews(movieId)
@@ -32,6 +35,26 @@ class MoviesShow extends React.Component {
     this.getImages(movieId)
     this.getVideos(movieId)
     this.getRecommendations(movieId)
+  }
+
+  componentDidUpdate() {
+    if (this.state.previousLocation===this.props.history.location) return null
+    this.setState({ previousLocation: this.props.history.location })
+    window.scrollTo(0,0)
+    const movieId = this.props.match.params.id
+    this.getMovie(movieId)
+    this.getReviews(movieId)
+    this.getCredits(movieId)
+    this.getImages(movieId)
+    this.getVideos(movieId)
+    this.getRecommendations(movieId)
+
+  }
+
+  handleClick(e) {
+    const id =  e.target.dataset.id
+    //console.log(e.target.dataset)
+    this.props.history.push(`/movies/${id}`)
   }
 
   getMovie(movieId) {
@@ -86,8 +109,20 @@ class MoviesShow extends React.Component {
       .then(res => {
         //console.log(res.data)
         this.setState({ media: {posters: res.data.posters, backdrops: res.data.backdrops}, currentMedia: 'posters' })
+        this.setBackground()
+
       })
       .catch(err => console.log(err))
+  }
+
+  setBackground() {
+    const backgrounds = this.state.media.backdrops.slice()
+    const el = this.hero
+    console.log(backgrounds)
+
+    el.style.background = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://image.tmdb.org/t/p/w500/${backgrounds[0].file_path}) no-repeat`
+    el.style.backgroundSize = 'cover'
+
   }
 
   getVideos(movieId) {
@@ -106,79 +141,81 @@ class MoviesShow extends React.Component {
   }
 
   render() {
-    if (!this.state.movie || !this.state.reviews || !this.state.cast || !this.state.currentMedia || !this.state.recommendations) return null
-    const movie = {
-      ...this.state.movie,
-      review: {...this.state.reviews.results},
-      cast: [...this.state.cast.cast]
-    }
-  console.log(this.state.reviews)
+
+    // const movie = {
+    //   ...this.state.movie,
+    //   review: {...this.state.reviews.results},
+    //   cast: [...this.state.cast.cast]
+    // }
+     //console.log(this.state)
     return(
 
       <section >
 
-        <div className="hero is-primary is-fullheight-with-navbar">
-          <div className="hero-body">
-            <div className="container">
-              <div id="titleCard" className="columns">
-                <div className="column is-one-quarter">
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                    alt=""
-                    className="image"
-                  />
-                </div>
-                <div className="column is-three-quarters">
-                  <h1 className="title">
-                    {movie.title}
-                    <a href={`https://www.imdb.com/title/${movie.imdb_id}`}>
-                      <span className="icon has-text-warning">
-                        <i className="fab fa-imdb"></i>
-                      </span>
-                    </a>
+        <div ref={el => this.hero = el } className="hero is-primary is-fullheight-with-navbar">
+          {this.state.movie &&
+            <div className="hero-body">
+              <div className="container">
+                <div id="titleCard" className="columns">
+                  <div className="column is-one-quarter">
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${this.state.movie.poster_path}`}
+                      alt=""
+                      className="image"
+                    />
+                  </div>
+                  <div className="column is-three-quarters">
+                    <h1 className="title">
+                      {this.state.movie.title}
+                      <a href={`https://www.imdb.com/title/${this.state.movie.imdb_id}`}>
+                        <span className="icon has-text-warning">
+                          <i className="fab fa-imdb"></i>
+                        </span>
+                      </a>
 
-                  </h1>
-                  <h2 className="subtitle">{movie.tagline}</h2>
-                  <hr/>
-                  <h4 className="subtitle is-size-4 has-text-weight-bold">Overview</h4>
-                  <p>{movie.overview}</p>
-                  <hr />
-                  <h4 className="is-size-4 has-text-weight-bold">Release Date: {movie.release_date}</h4>
-                  <hr />
-                  <h4 className="subtitle">Genres</h4>
-                  <p className="level">{movie.genres.map(genre => (
-                    <span
-                      className="level-left"
-                      key={genre.id}
-                    >{genre.name}</span>
-                  ))}
-                  </p>
+                    </h1>
+                    <h2 className="subtitle">{this.state.movie.tagline}</h2>
+                    <hr/>
+                    <h4 className="subtitle is-size-4 has-text-weight-bold">Overview</h4>
+                    <p>{this.state.movie.overview}</p>
+                    <hr />
+                    <h4 className="is-size-4 has-text-weight-bold">Release Date: {this.state.movie.release_date}</h4>
+                    <hr />
+                    <h4 className="subtitle">Genres</h4>
+                    <p className="level">{this.state.movie.genres.map(genre => (
+                      <span
+                        className="level-left"
+                        key={genre.id}
+                      >{genre.name}</span>
+                    ))}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-          </div>
+            </div>}
 
         </div>
         <hr />
-        <MoviesShowCast
-          cast={movie.cast}
-        />
-        { this.state.reviews.results.length!==0 && <MoviesShowReviews
+        {this.state.cast && <MoviesShowCast
+          cast={this.state.cast.cast}
+                            />}
+        { this.state.reviews.results.length>0 && <MoviesShowReviews
           reviews={this.state.reviews.results}
           reviewNumber={this.state.reviewNumber}
           moveReview={this.moveReview}
-                                       />}
+                                                   />}
         <hr />
-        <MoviesMedia
+        {this.state.currentMedia && <MoviesMedia
           media={this.state.media}
           chooseMedia= {this.chooseMedia}
           currentMedia={this.state.currentMedia}
-        />
+        />}
         <hr />
-        <MoviesRecommendations
+        {this.state.recommendations && <MoviesRecommendations
           recommendations={this.state.recommendations}
-        />
+          handleClick={this.handleClick}
+        />}
         <hr />
 
       </section>
