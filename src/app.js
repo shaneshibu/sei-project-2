@@ -24,7 +24,7 @@ class App extends React.Component {
           <NavBar />
           <Switch>
             <Route exact path="/" component={Home}/>
-            <Route path="/search/movies/:query" component={MoviesSearchResults}/>
+            {/* <Route path="/search/movies/:query" component={MoviesSearchResults}/> */}
             <Route path="/movies/:id" component={MoviesShow}/>
           </Switch>
         </main>

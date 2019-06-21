@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .review-master {
   height: 250px;
   //width: 75vw;
@@ -58,10 +62,11 @@
   line-height: 1;
   font-size: 14px;
 }
-#result {
+.result {
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   margin: 5px;
   width: 100%;
+  max-height: 200px;
 }
 
 .hero {
