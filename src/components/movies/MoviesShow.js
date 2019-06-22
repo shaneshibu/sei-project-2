@@ -19,11 +19,15 @@ class MoviesShow extends React.Component {
     this.getCredits = this.getCredits.bind(this)
     this.getImages = this.getImages.bind(this)
     this.getVideos = this.getVideos.bind(this)
+    this.getRecommendations = this.getRecommendations.bind(this)
     this.moveReview = this.moveReview.bind(this)
     this.chooseMedia = this.chooseMedia.bind(this)
-    this.getRecommendations = this.getRecommendations.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.setBackground = this.setBackground.bind(this)
+    this.formatDate = this.formatDate.bind(this)
+
+    this.backgroundImageTimerId = null
+    this.time = new Date().getTime()
   }
 
   componentDidMount() {
@@ -38,6 +42,12 @@ class MoviesShow extends React.Component {
   }
 
   componentDidUpdate() {
+
+    //console.log('update', this.state.backgroundPosition)
+    if (new Date().getTime() > this.time + 5000) {
+      this.backgroundImageTimerId = null
+      this.setBackground()
+    }
     if (this.state.previousLocation===this.props.history.location) return null
     this.setState({ previousLocation: this.props.history.location })
     window.scrollTo(0,0)
@@ -48,7 +58,7 @@ class MoviesShow extends React.Component {
     this.getImages(movieId)
     this.getVideos(movieId)
     this.getRecommendations(movieId)
-
+    this.setBackground()
   }
 
   handleClick(e) {
@@ -60,7 +70,7 @@ class MoviesShow extends React.Component {
   getMovie(movieId) {
     axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`)
       .then(res => {
-        this.setState({ movie: res.data})
+        this.setState({ movie: {...res.data, release_date: this.formatDate(res.data.release_date)} })
       })
       .catch(err => console.log(err))
   }
@@ -108,20 +118,28 @@ class MoviesShow extends React.Component {
     axios.get(`https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiKey}`)
       .then(res => {
         //console.log(res.data)
-        this.setState({ media: {posters: res.data.posters, backdrops: res.data.backdrops}, currentMedia: 'posters' })
+        this.setState({ media: {posters: res.data.posters, backdrops: res.data.backdrops}, currentMedia: 'posters', backgroundPosition: 0 })
         this.setBackground()
-
       })
       .catch(err => console.log(err))
   }
 
   setBackground() {
+    let position = this.state.backgroundPosition
+    if (!this.state.media.backdrops.length) return
     const backgrounds = this.state.media.backdrops.slice()
+    console.log('before', position)
+    if (position === backgrounds.length) position = 0
+    console.log('after', position)
     const el = this.hero
-    console.log(backgrounds)
+    //console.log(backgrounds)
 
-    el.style.background = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://image.tmdb.org/t/p/w500/${backgrounds[0].file_path}) no-repeat`
+    el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(https://image.tmdb.org/t/p/w500/${backgrounds[position].file_path})`
     el.style.backgroundSize = 'cover'
+
+    this.backgroundImageTimerId = setTimeout(() => {
+      this.setState({ backgroundPosition: position+1 })
+    }, 5000)
 
   }
 
@@ -140,14 +158,17 @@ class MoviesShow extends React.Component {
 
   }
 
-  render() {
+  formatDate(apiDateString) {
+    if (apiDateString) {
+      const dateArr = apiDateString.split('-')
+      return `${dateArr[2]}/${dateArr[1]}/${dateArr[0]}`
+    }
+    return ''
+  }
 
-    // const movie = {
-    //   ...this.state.movie,
-    //   review: {...this.state.reviews.results},
-    //   cast: [...this.state.cast.cast]
-    // }
-     //console.log(this.state)
+  render() {
+    //console.log('render',this.state.backgroundPosition)
+    console.log(this.time)
     return(
 
       <section >
@@ -160,7 +181,7 @@ class MoviesShow extends React.Component {
                   <div className="column is-one-quarter">
                     <img
                       src={`https://image.tmdb.org/t/p/w500/${this.state.movie.poster_path}`}
-                      alt=""
+                      alt={`${this.state.movie.name} poster`}
                       className="image"
                     />
                   </div>
@@ -176,12 +197,12 @@ class MoviesShow extends React.Component {
                     </h1>
                     <h2 className="subtitle">{this.state.movie.tagline}</h2>
                     <hr/>
-                    <h4 className="subtitle is-size-4 has-text-weight-bold">Overview</h4>
+                    <h4 className="subtitle has-text-weight-bold">Overview</h4>
                     <p>{this.state.movie.overview}</p>
                     <hr />
-                    <h4 className="is-size-4 has-text-weight-bold">Release Date: {this.state.movie.release_date}</h4>
+                    <h5 className="subtitle has-text-weight-bold">Release Date: {this.state.movie.release_date}</h5>
                     <hr />
-                    <h4 className="subtitle">Genres</h4>
+                    <h4 className="subtitle has-text-weight-bold">Genres</h4>
                     <p className="level">{this.state.movie.genres.map(genre => (
                       <span
                         className="level-left"
@@ -204,7 +225,7 @@ class MoviesShow extends React.Component {
           reviews={this.state.reviews.results}
           reviewNumber={this.state.reviewNumber}
           moveReview={this.moveReview}
-                                                   />}
+        />}
         <hr />
         {this.state.currentMedia && <MoviesMedia
           media={this.state.media}

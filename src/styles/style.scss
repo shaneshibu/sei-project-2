@@ -70,7 +70,9 @@
 }
 
 .hero {
-
+  transition: background-image 0.2s ease-in-out;
+  //transition-timing-function: ease;
   background-size: cover;
+  background-position: center;
   //background-repeat: no-repeat;
 }

@@ -60,7 +60,6 @@ class Home extends React.Component {
     if (query.trim().length!==0) {
       axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`)
         .then(res => {
-
           res.data.results.map(movie => {
             if (movie.overview.length > 150 ) {
               overview = movie.overview.slice(0, 150) + '...'

@@ -6,7 +6,6 @@ import './styles/style.scss'
 
 import NavBar from './components/common/NavBar'
 import Home from './components/common/Home'
-import MoviesSearchResults from './components/movies/MoviesSearchResults'
 import MoviesShow from './components/movies/MoviesShow'
 
 class App extends React.Component {
