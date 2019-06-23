@@ -1,38 +1,63 @@
 import React from 'react'
 
-const MoviesMedia = ({ media, chooseMedia, currentMedia }) => (
+const MoviesMedia = ({ media, chooseMedia, currentMedia }) => {
+  return (
+    <div className="container">
+      <h4 className="subtitle has-text-weight-bold">Media</h4>
+      <div className="columns is-mobile">
+        {media.posters && <div className="column has-text-weight-semibold" id="posters" onClick={chooseMedia}>
+          Posters ({media['posters'].length})
+        </div>}
+        {media.backdrops && <div className="column has-text-weight-semibold" id="backdrops" onClick={chooseMedia}>
+          Backdrop ({media['backdrops'].length})
+        </div>}
+        {media.videos && <div className="column has-text-weight-semibold" id="videos" onClick={chooseMedia}>
+          Videos ({media['videos'].length})
+        </div>}
+      </div>
+      <div id="media-content" className="columns is-mobile">
 
-  <div className="container">
-    <h2 className="subtitle">Media</h2>
-    <div className="columns">
-      <div className="column" id="videos" onClick={chooseMedia}>Videos</div>
-      <div className="column" id="backdrops" onClick={chooseMedia}>Backdrop</div>
-      <div className="column" id="posters" onClick={chooseMedia}>Posters</div>
+        {currentMedia!=='videos' && media['videos'] && media[currentMedia].map(image => (
+          <img
+            key={image.file_path}
+            className="image"
+            src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+          />
+        ))}
+        {currentMedia==='videos' && media[currentMedia] && media[currentMedia].map((video, i) => (
+          <div key={i} className="column is-9-mobile is-7-tablet is-6-desktop is-5-widescreen is-gapless is-paddingless">
+            {/* <i data-id={i} className='fas fa-spinner fa-pulse'></i> */}
+            <img data-id={i} className="spinner" src="../../assets/712.gif" />
+            <iframe
+              style={{display: 'none'}}
+              key={video.id}
+              data-id={i}
+              width="100%"
+              // height="100%"
+              src={`https://www.youtube.com/embed/${video.key}`}
+              onLoad={(e) => {
+                e.target.style.display = 'flex'
+                // const spinners = document.querySelectorAll('.fa-spinner')
+                // spinners.forEach(spinner => {
+                //   if (spinner.dataset.id === e.target.dataset.id) {
+                //     spinner.style.display = 'none'
+                //   }
+                // })
+                const spinner = document.querySelector(`.spinner[data-id="${i}"]`)
+                console.log(spinner)
+                spinner.style.display = 'none'
+              }}
+              frameBorder="0"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            >
+            </iframe>
+          </div>
+        ))}
+      </div>
+      <hr />
     </div>
-    <div id="media-content" className="">
-
-      {currentMedia!=='videos' && media[currentMedia].map(image => (
-        <img
-          key={image.file_path}
-          className="image"
-          src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-        />
-      ))}
-      {currentMedia ==='videos' && media[currentMedia].map(video => (
-
-        <iframe
-          key={video.id}
-          src={`https://www.youtube.com/embed/${video.key}`}
-          frameBorder="0"
-          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        >
-        </iframe>
-
-      ))}
-    </div>
-  </div>
-)
-
+  )
+}
 
 export default MoviesMedia

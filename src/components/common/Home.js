@@ -78,7 +78,7 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log(this.state.searchString, this.state.query)
+    //console.log(this.state.searchString, this.state.query)
     return(
       <section className="section">
         <div className="container">
