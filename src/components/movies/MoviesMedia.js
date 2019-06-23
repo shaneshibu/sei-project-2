@@ -37,14 +37,7 @@ const MoviesMedia = ({ media, chooseMedia, currentMedia }) => {
               src={`https://www.youtube.com/embed/${video.key}`}
               onLoad={(e) => {
                 e.target.style.display = 'flex'
-                // const spinners = document.querySelectorAll('.fa-spinner')
-                // spinners.forEach(spinner => {
-                //   if (spinner.dataset.id === e.target.dataset.id) {
-                //     spinner.style.display = 'none'
-                //   }
-                // })
                 const spinner = document.querySelector(`.spinner[data-id="${i}"]`)
-                console.log(spinner)
                 spinner.style.display = 'none'
               }}
               frameBorder="0"

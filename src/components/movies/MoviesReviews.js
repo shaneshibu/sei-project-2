@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MoviesShowReviews = ({ reviews, reviewNumber, moveReview }) => (
+const MoviesReviews = ({ reviews, reviewNumber, moveReview }) => (
 
   <div className="container">
     {reviews && !!reviews.length && <div>
@@ -21,4 +21,4 @@ const MoviesShowReviews = ({ reviews, reviewNumber, moveReview }) => (
   </div>
 )
 
-export default MoviesShowReviews
+export default MoviesReviews

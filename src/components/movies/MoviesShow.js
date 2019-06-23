@@ -1,8 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 
-import MoviesShowReviews from './MoviesShowReviews'
-import MoviesShowCast from './MoviesShowCast'
+import MoviesHero from './MoviesHero'
+import MoviesCast from './MoviesCast'
+import MoviesReviews from './MoviesReviews'
 import MoviesMedia from './MoviesMedia'
 import MoviesRecommendations from './MoviesRecommendations'
 
@@ -77,10 +78,6 @@ class MoviesShow extends React.Component {
   }
 
   pageIsLoading() {
-    // const preLoaderPath = '../../assets/ajax-loader.gif'
-    // this.hero.style.backgroundImage = `linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)), url(${preLoaderPath})`
-    // this.hero.style.backgroundPosition = 'center'
-    // this.hero.backgroundSize = 'contain'
     this.hero.style.background = 'white'
   }
 
@@ -208,12 +205,13 @@ class MoviesShow extends React.Component {
   }
 
   chooseMedia({ target: { id }}) {
+    const mediaContent = document.getElementById('media-content')
+    mediaContent.scrollTo(0,0)
     this.setState({currentMedia: id})
   }
 
   handleClick(e) {
     const id =  e.target.dataset.id
-    //console.log(e.target.dataset)
     this.props.history.push(`/movies/${id}`)
   }
 
@@ -224,62 +222,21 @@ class MoviesShow extends React.Component {
       <section>
 
         <div ref={el => this.hero = el} className="hero is-dark is-fullheight-with-navbar is-paddingless">
-          {/* <div className="hero-tint"> */}
           {!this.state.heroLoaded && <img className="spinner" src="../../assets/712.gif" />}
           {this.state.heroLoaded &&
-            <div className="hero-body">
-              <div className="container">
-                <div id="titleCard" className="columns">
-                  <div className="column is-one-quarter">
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500/${this.state.movie.poster_path}`}
-                      alt={`${this.state.movie.name} poster`}
-                      className="image"
-                    />
-                  </div>
-                  <div className="column is-three-quarters">
-                    <h1 className="title">
-                      {this.state.movie.title}
-                      <a href={`https://www.imdb.com/title/${this.state.movie.imdb_id}`}>
-                        <span className="icon has-text-warning">
-                          <i className="fab fa-imdb"></i>
-                        </span>
-                      </a>
-
-                    </h1>
-                    <h2 className="subtitle">{this.state.movie.tagline}</h2>
-                    <hr/>
-                    <h4 className="subtitle has-text-weight-bold">Overview</h4>
-                    <p>{this.state.movie.overview}</p>
-                    <hr />
-                    <h5 className="subtitle has-text-weight-bold">Release Date: {this.state.movie.release_date}</h5>
-                    <hr />
-                    <h4 className="subtitle has-text-weight-bold">Genres</h4>
-                    <p className="level">{this.state.movie.genres.map(genre => (
-                      <span
-                        className="level-left"
-                        key={genre.id}
-                      >{genre.name}</span>
-                    ))}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-            </div>}
-          {/* </div> */}
+            <MoviesHero movie={this.state.movie}/>}
         </div>
         <hr />
         <div className="content">
 
           {!this.state.contentLoaded && <img className="spinner" src="../../assets/712.gif" />}
           {this.state.contentLoaded &&
-            <MoviesShowCast
+            <MoviesCast
               cast={this.state.cast.cast}
             />}
 
           {this.state.contentLoaded &&
-            <MoviesShowReviews
+            <MoviesReviews
               reviews={this.state.reviews.results}
               reviewNumber={this.state.reviewNumber}
               moveReview={this.moveReview}
@@ -299,7 +256,6 @@ class MoviesShow extends React.Component {
               handleClick={this.handleClick}
             />}
         </div>
-
 
       </section>
     )

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MoviesShowCast = ({ cast }) => {
+const MoviesCast = ({ cast }) => {
   return(
 
     <div className="container">
@@ -20,4 +20,4 @@ const MoviesShowCast = ({ cast }) => {
   )
 }
 
-export default MoviesShowCast
+export default MoviesCast
