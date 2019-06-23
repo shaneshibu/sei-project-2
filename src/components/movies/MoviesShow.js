@@ -122,7 +122,9 @@ class MoviesShow extends React.Component {
         //videos
         const videos = videosRes.data.results
         //recommendations
-        const recommendations = recommendationsRes.data.results
+        const recommendations = recommendationsRes.data.results.map(r => {
+          return {...r, release_date: this.formatDate(r.release_date)}
+        })
         //setState
         this.setState({
           cast,
@@ -216,7 +218,7 @@ class MoviesShow extends React.Component {
   }
 
   render() {
-    //console.log(this.state)
+    // console.log(this.state)
     return(
 
       <section>
