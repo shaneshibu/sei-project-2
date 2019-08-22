@@ -163,20 +163,16 @@ class MoviesShow extends React.Component {
   }
 
   setBackground() {
-    //console.log(this.state)
     let position = this.state.backgroundPosition
     if (!this.state.media.backdrops.length) return
     const backgrounds = this.state.media.backdrops.slice()
     if (position+1 === backgrounds.length) position = 0
-    //const el = this.hero
-    //console.log(position, new Date().getSeconds())
     this.hero.style.background = `url(https://image.tmdb.org/t/p/w500/${backgrounds[position].file_path}) center no-repeat`
     this.hero.style.backgroundSize = 'cover'
 
     this.backgroundImageTimerId = setTimeout(() => {
       this.setState({ backgroundPosition: position+1 })
     }, 5000)
-
   }
 
   formatDate(apiDateString) {

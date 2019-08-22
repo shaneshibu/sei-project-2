@@ -17,8 +17,6 @@ const MoviesRecommendations = ({ recommendations, handleClick }) => (
           />
           <p data-id={recommendation.id} >{recommendation.title}</p>
           <p data-id={recommendation.id}>{recommendation.release_date}</p>
-
-
         </div>
       ))}
     </div>
