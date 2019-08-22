@@ -42,8 +42,10 @@ Our two greatest hurdles came in the cycling of hero images behind the main disp
 ###  Background Image
 Setting the initial image was  relatively simple, however if multiple images were included with the API return, we also wanted to showcase these. For films with multiple images, we used to code below to take the provided array of images from the API and cycle through them, adding a time out to smooth the change over.
 
-![Alt text](./dist/assets/readme/cast.png?raw=true "Title")
+![Alt text](./dist/assets/readme/setbackground.png?raw=true "Title")
 
 ### Cast and Movies
 While cast and recommended movies were provided by our API, not all of the cast profiles or recommended films had an associated image. Without these images, the formatting for the scroll bars we wished to use became irregular, necessitating the use of a placeholder image.
 Both cast and recommendations were built using a functional component with cast and recommendations passed from the main show page. The class component for the cast is shown below.
+
+![Alt text](./dist/assets/readme/cast.png?raw=true "Title")
