@@ -40,9 +40,10 @@ Subsequent features could include an option for users to create a profile, savin
 Our two greatest hurdles came in the cycling of hero images behind the main display, and the spacing of cast and recommended movies.
 
 ###  Background Image
-Setting the initial image was  relatively simple, however if multiple images were included with the API return, we also wanted to showcase these. For films with multiple images, we used to code below to take the provided array of images from the API and cycle through them, adding a time out to smooth the change over.
+Setting the initial image was  relatively simple, however if multiple images were included with the API return, we also wanted to showcase these. For films with multiple images, we used to code below to take the provided array of images from the API and cycle through them, adding a time out to smooth the change over (see code below).
 
 ![Alt text](./dist/assets/readme/setbackground.png?raw=true "Title")
+
 
 ### Cast and Movies
 While cast and recommended movies were provided by our API, not all of the cast profiles or recommended films had an associated image. Without these images, the formatting for the scroll bars we wished to use became irregular, necessitating the use of a placeholder image.
