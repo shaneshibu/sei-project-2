@@ -2,7 +2,6 @@ import React from 'react'
 
 const MoviesCast = ({ cast }) => {
   return(
-
     <div className="container">
       <h4 className="subtitle has-text-weight-bold">Cast ({cast.length})</h4>
       <div className="cast-master columns is-mobile">

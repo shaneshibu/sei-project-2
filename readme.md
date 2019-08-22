@@ -1,67 +1,52 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project #2: Reacathon
+# SEI - 41 - PAIR CODING
+## Brief
+The second project of the course was pair-code a React application that consumed a public API.
 
-## Overview
+## Technical Requirements
+Consume a public API
+Have several components, at least one functional and one classical
+Can include a router
+Include wire frames
+Have semantically clean HTML
 
-The second project is to, working as a small group, **build a React application** that consumes a **public API**.
+## Deliverables
+A working app
+A git repository on Github
+This Readme!
 
-### Technical Requirements
+## Team
+Shane - [shaneshubu · GitHub](https://github.com/shaneshibu)
+Charles - [CPrich905 · GitHub](https://github.com/CPrich905)
 
-Your app must:
+## Technologies used
+* HTML5
+* SCSS and Bulma
+* JavaScript (ECMAScript6)
+* React.js
+* GitHub
 
-* **Consume a public API** – this could be anything but it must make sense for your project.
-* **Have several components** - At least one classical and one functional.
-* **The app can include a router** - with several "pages".
-* **Include wireframes** - that you designed before building the app.
-* Have **semantically clean HTML** - you make sure you write HTML that makes structural sense rather than thinking about how it might look, which is the job of CSS.
-* **Be deployed online** and accessible to the public. (We will cover how to do this next week, not required on first deadline)
+## Dependencies
+* Axios
 
----
+## Our Approach
+With only two days for this pair coded project, our key constraint was time and how long it would take for an API key. Having identified themoviedb.org , we set about recreating an IMDB-type webpage. Our intention was to create a simple layout showing cast, crew, similar films and associated media.
 
-## Necessary Deliverables
+## Future development
+Once completing the main movie site, we were quickly able to include TV listings as well, which was our secondary priority and exceeded our Minimum Viable Product of a films database.
 
-* A **working application**, hosted somewhere on the internet
-* A **link to your hosted working app** in the URL section of your Github repo
-* A **git repository hosted on Github**, with a link to your hosted project, and frequent commits dating back to the _very beginning_ of the project
-* **A `readme.md` file** with:
-  * Explanations of the **technologies** used
-    * A couple of paragraphs about the **general approach you took**
-    * **Installation instructions** for any dependencies
-    * Link to your **wireframes** – sketches of major views / interfaces in your application
-   * Descriptions of any **unsolved problems** or **major hurdles** your team had to overcome
+With our main focus on functionality, we both agreed that
 
----
+While we are not planning on taking this app further at this time, future developments could include an option for users to create a profile, saving data such as favourite actors and films, recommended viewings etc.
 
-## Suggested Ways to Get Started
+## Major hurdles
+Our two greatest hurdles came in the cycling of hero images behind the main display, and the spacing of cast and recommended movies.
 
-* **Sign Off** Before starting you must get your project idea signed off by an Instructor/TA, sign off wil require a basic wireframe and working Insomnia request to your chosen API.
-* **Don’t hesitate to write throwaway code** to solve short term problems.
-* **Read the docs for whatever technologies / frameworks / APIs you use**.
-* **Write DRY code**.
-* **Be consistent with your code style.**
-* **Commit early, commit often.** Don’t be afraid to break something because you can always go back in time to a previous version.
-* **Keep user stories small and well-defined**, and remember – user stories focus on what a user needs, not what development tasks need accomplishing.
-* **Write code another developer wouldn't have to ask you about**. Do your naming conventions make sense? Would another developer be able to look at your app and understand what everything is?
-* **Make it all well-formatted.** Are you indenting, consistently? Can we find the start and end of every div, curly brace, etc?
-* **Comment your code.** Will someone understand what is going on in each block or function? Even if it's obvious, explaining the what & why means someone else can pick it up and get it.
-* **Write pseudocode before you write actual code.** Thinking through the logic of something helps.
+###  Background Image
+Setting the initial image was  relatively simple. For films with multiple images, we used to code below to take the provided array of images from the API and cycle through them. In order to smooth the speed of the change over, we also added a Timeout.
+[image:220F5C41-9759-43EC-BCAE-B5BEC537FB9E-733-0000F5771BE05B6A/1536631B-C018-4FDF-9EAB-CCFEDE2A300B.png]
 
----
+### Cast and Movies
+While cast and recommended movies were provided by our API, not all of the cast profiles or recommended films had an associated image. Without these images, the formatting for the scroll bars we wished to use became irregular, necessitating the use of a placeholder image.
+Both cast and recommendations were built using a functional component with cast and recommendations passed from the main show page. The class component for the cast is shown below.
 
-## Useful Resources
-
-* **[React](https://reactjs.org/)**
-*  **[Public APIs @ Programmable Web](https://www.programmableweb.com/)**
-
----
-
-## Project Feedback + Evaluation
-
-* __Project Workflow__: Did you complete the user stories, wireframes, task tracking as specified above? Did you use source control as expected for the phase of the program you’re in (detailed above)?
-
-* __Technical Requirements__: Did you deliver a project that met all the technical requirements? Given what the class has covered so far, did you build something that was reasonably complex?
-
-* __Creativity__: Did you added a personal spin or creative element into your project submission? Did you deliver something of value to the end user (not just a login button and an index page)?
-
-* __Code Quality__: Did you follow code style guidance and best practices covered in class, such as spacing, modularity, and semantic naming? Did you comment your code as your instructors as we have in class?
-
-* __Problem Solving__: Are you able to defend why you implemented your solution in a certain way? Can you demonstrated that you thought through alternative implementations? _(Note that this part of your feedback evaluation will take place during your one-on-one code review with your instructors, after you've completed the project.)_
+[image:E30EA5AC-E59E-4211-A66D-36C1C8D92319-733-0000F6C58B2AFBB9/CCBB4568-AB01-49D2-95A2-FCD03A96862E.png]
