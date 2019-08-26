@@ -30,7 +30,7 @@ The project is currently deployed at https://tmdb2.herokuapp.com/
 ## Overview
 Having decided to use th API from themoviedb.org, we set about recreating an IMDB-type website where users could navigate to a movie page by searching for its name.. Our intention was to create a simple layout showing cast, crew, reviews, similar films and associated media.
 
-![tmdb2 Main Screen](src/assets/homepage.gif)
+![tmdb2 Main Screen](src/assets/Homepage.gif)
 
 ## Wins
 - Dynamically changin the background image of the Hero div
