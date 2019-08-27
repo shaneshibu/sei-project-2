@@ -52,12 +52,12 @@ searchMoviesOrTv() {
 }
 ```
 
-![tmdb2 Main Screen](src/assets/Homepage.gif)
+![tmdb2 Main Screen](src/assets/searchmovie.gif)
 
 ### Displaying a movie
 From the search results page, when a user clicks on a movie, they are taken to that particular movie's page. On the movie page, a GET request is made to the API for each section that needs to be populated: the hero, cast, reviews, media and recommendation sections. The responses from these requests are saved in the state object and then rendered to the page.  
 
-![tmdb2 Movie Page](src/assets/moviepage.gif)
+![tmdb2 Movie Page](src/assets/displaymovie.gif)
 
 ## Wins
 - Dynamically changing the background image of the Hero div
